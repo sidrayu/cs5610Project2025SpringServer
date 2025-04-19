@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-
 const ChoiceSchema = new mongoose.Schema({
     _id: String,
     title: String,
@@ -9,7 +8,7 @@ const ChoiceSchema = new mongoose.Schema({
 const QuestionSchema = new mongoose.Schema({
     _id: String,
     title: String,
-    type:{
+    type: {
         type: String,
         enum: ["multipleChoice", "trueFalse", "fillInTheBlank"],
         default: "multipleChoice",
@@ -17,7 +16,7 @@ const QuestionSchema = new mongoose.Schema({
     },
     points: Number,
     question: String,
-    choices:{
+    choices: {
         type: [ChoiceSchema],
         default: [],
         required: function() {
@@ -30,7 +29,7 @@ const QuestionSchema = new mongoose.Schema({
             return this.type === "multipleChoice" || this.type === "trueFalse";
         },
     },
-    answers:{
+    answers: {
         type: [String],
         default: [],
         required: function() {
@@ -39,16 +38,15 @@ const QuestionSchema = new mongoose.Schema({
     }
 });
 
-
-
 const quizSchema = new mongoose.Schema({
     _id: String,
+    course: String,
     title: String,
     isPublished: { type: Boolean, default: false },
     type: {
-      type: String,
-      enum: ["Graded Quiz", "Practice Quiz", "Graded Survey", "Ungraded Survey"],
-      default: "Graded Quiz",
+        type: String,
+        enum: ["Graded Quiz", "Practice Quiz", "Graded Survey", "Ungraded Survey"],
+        default: "Graded Quiz",
     },
     points: { type: Number, default: 0 },
     group: { type: String, default: "Quizzes" },
@@ -67,21 +65,25 @@ const quizSchema = new mongoose.Schema({
         required: false,
         default: ""
     },
-    availableDate:{
+    availableDate: {
         type: String,
         default: "",
         required: false
     },
-    untildate:{
+    untilDate: {
         type: String,
         default: "",
         required: false
+    },
+    assignTo: {
+        type: [String],
+        default: ["Everyone"]
     },
     questions: {
         type: [QuestionSchema],
         default: [],
         required: false,
     },
-    course: { type: String, ref: "CourseModel" },
 }, { collection: "quizzes" });
+
 export default quizSchema;
