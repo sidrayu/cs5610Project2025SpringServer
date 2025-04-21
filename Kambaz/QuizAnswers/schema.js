@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import courseSchema from "../Courses/schema";
 
 const AnswerSchema = new mongoose.Schema({
     questionId: String,
