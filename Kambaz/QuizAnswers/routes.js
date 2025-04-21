@@ -1,6 +1,12 @@
 import * as dao from './dao.js';
 export default function QuizAnswerRoutes(app) {
 
+    // Get all quiz answers
+    app.get("/api/quizAnswers/getAll", async (req, res) => {
+        const quizAnswers = await dao.allQuizAnswers();
+        res.json(quizAnswers);
+    });
+
     // Get quizAnswers by course ID and user ID
     app.get("/api/quizAnswers/courses/:courseId/users/:userId", async (req, res) => {
         const { courseId, userId } = req.params;
@@ -10,6 +16,7 @@ export default function QuizAnswerRoutes(app) {
 
         res.json(quizAnswers);
     });
+
 
     // Get quizAnswers by quizAnswer ID
     app.get("/api/quizAnswers/:quizAnswerId", async (req, res) => {

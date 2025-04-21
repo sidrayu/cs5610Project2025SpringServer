@@ -1,6 +1,11 @@
 import model from "./model.js";
 import { v4 as uuidv4 } from 'uuid';
 
+// Get all quiz answers
+export const allQuizAnswers = () => {
+    return model.find();
+};
+
 // Get quizAnswers by course ID and user Id
 export const findQuizAnswersByCourseIdAndUserId = (courseId, userId) => {
     console.log("Querying model with courseId and userId:", { courseId, userId });
