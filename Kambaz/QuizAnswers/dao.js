@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 // Get quizAnswers by course ID and user Id
 export const findQuizAnswersByCourseIdAndUserId = (courseId, userId) => {
+    console.log("Querying model with courseId and userId:", { courseId, userId });
     return model.find({ courseId: courseId, userId: userId });
 };
 

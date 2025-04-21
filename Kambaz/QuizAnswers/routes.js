@@ -5,6 +5,9 @@ export default function QuizAnswerRoutes(app) {
     app.get("/api/quizAnswers/courses/:courseId/users/:userId", async (req, res) => {
         const { courseId, userId } = req.params;
         const quizAnswers = await dao.findQuizAnswersByCourseIdAndUserId(courseId, userId);
+        console.log("Quiz answers for courseId:", courseId, "and userId:", userId);
+        console.log("Quiz answers:", quizAnswers);
+
         res.json(quizAnswers);
     });
 

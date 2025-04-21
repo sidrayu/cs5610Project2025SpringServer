@@ -35,7 +35,11 @@ const quizAnswerSchema = new mongoose.Schema({
         default: 0,
         required: true,
     },
-    attemptCount: Number,
+    attemptCount: {
+        type: Number,
+        default: 1,
+        required: true,
+    },
     lastAttempt: {
         date: {
             type: String,
