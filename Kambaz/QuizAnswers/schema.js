@@ -37,26 +37,31 @@ const quizAnswerSchema = new mongoose.Schema({
     },
     attemptCount: {
         type: Number,
-        default: 1,
+        default: 0,
         required: true,
     },
-    lastAttempt: {
-        date: {
-            type: String,
-            required: true,
-            default: ""
-        },
-        score: {
-            type: Number,
-            required: true,
-            default: 0  
-        },
-        timeSpent: {
-            type: Number,
-            required: false,
-            default: 0
-        }   
+
+    startTime: {
+        type: String,
+        required: true,
+        default: ""
     },
+    endTime: {
+        type: String,
+        required: true,
+        default: ""
+    },
+    score: {
+        type: Number,
+        required: true,
+        default: 0  
+    },
+    timeSpent: {
+        type: Number,
+        required: false,
+        default: 0
+    },
+
     answers: {
         type: [AnswerSchema],
         default: [],

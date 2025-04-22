@@ -28,8 +28,21 @@ export default function QuizAnswerRoutes(app) {
     // Create or update quizAnswer
     app.post("/api/quizAnswers", async (req, res) => {
         const quizAnswer = req.body;
-        const createdOrUpdatedQuizAnswer = await dao.createOrUpdateQuizAnswer(quizAnswer);
-        res.json(createdOrUpdatedQuizAnswer);
+        const uid = req.session["currentUser"]?._id;
+        console.log("Creating or updating quizAnswer:", quizAnswer);
+        const createdOrUpdatedQuizAnswer = await dao.createOrUpdateQuizAnswer(uid, quizAnswer);
+        console.log("Created or updated scoredQuizAnswer:", createdOrUpdatedQuizAnswer);
+        // res.json(createdOrUpdatedQuizAnswer);
+        res.sendStatus(200);
+    });
+
+    // Get quizAnswer by userId and quizId
+    app.get("/api/quizAnswers/user/:userId/quiz/:quizId", async (req, res) => {
+        const { userId, quizId } = req.params;
+        // console.log("Querying quizAnswer with userId:", userId, "and quizId:", quizId);
+        const quizAnswer = await dao.getQuizAnswerByUserIdAndQuizId(userId, quizId);
+        // console.log("Quiz answer found:", quizAnswer);
+        res.json(quizAnswer);
     });
 
 }
