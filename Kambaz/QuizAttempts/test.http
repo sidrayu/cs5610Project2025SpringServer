@@ -1,0 +1,120 @@
+### 创建一个测试quiz
+POST http://localhost:4000/api/courses/RS101/quizzes
+Content-Type: application/json
+
+{
+    "title": "Test Quiz",
+    "type": "Graded Quiz",
+    "points": 100,
+    "multipleAttempts": true,
+    "numberAttempts": 3,
+    "timeLimit": 30,
+    "questions": [
+        {
+            "_id": "q1",
+            "title": "Question 1",
+            "type": "multipleChoice",
+            "points": 50,
+            "question": "What is 2+2?",
+            "choices": [
+                {"_id": "c1", "title": "3"},
+                {"_id": "c2", "title": "4"},
+                {"_id": "c3", "title": "5"}
+            ],
+            "answer": "c2"
+        },
+        {
+            "_id": "q2",
+            "title": "Question 2",
+            "type": "trueFalse",
+            "points": 50,
+            "question": "Is the sky blue?",
+            "answer": "true"
+        }
+    ]
+}
+
+### 第一次尝试 - 全部答对
+POST http://localhost:4000/api/courses/RS101/quizzes/QUIZ_ID/attempts
+Content-Type: application/json
+
+{
+    "studentId": "123",
+    "startTime": "2024-04-21T10:00:00Z",
+    "answers": [
+        {
+            "questionId": "q1",
+            "answer": "c2"
+        },
+        {
+            "questionId": "q2",
+            "answer": "true"
+        }
+    ]
+}
+
+### 第二次尝试 - 部分答错
+POST http://localhost:4000/api/courses/RS101/quizzes/QUIZ_ID/attempts
+Content-Type: application/json
+
+{
+    "studentId": "123",
+    "startTime": "2024-04-21T10:10:00Z",
+    "answers": [
+        {
+            "questionId": "q1",
+            "answer": "c1"
+        },
+        {
+            "questionId": "q2",
+            "answer": "true"
+        }
+    ]
+}
+
+### 第三次尝试 - 测试时间限制
+POST http://localhost:4000/api/courses/RS101/quizzes/QUIZ_ID/attempts
+Content-Type: application/json
+
+{
+    "studentId": "123",
+    "startTime": "2024-04-21T10:00:00Z",  # 设置一个超过时间限制的时间
+    "answers": [
+        {
+            "questionId": "q1",
+            "answer": "c2"
+        },
+        {
+            "questionId": "q2",
+            "answer": "true"
+        }
+    ]
+}
+
+### 第四次尝试 - 应该失败（超过尝试次数限制）
+POST http://localhost:4000/api/courses/RS101/quizzes/QUIZ_ID/attempts
+Content-Type: application/json
+
+{
+    "studentId": "123",
+    "startTime": "2024-04-21T10:30:00Z",
+    "answers": [
+        {
+            "questionId": "q1",
+            "answer": "c2"
+        },
+        {
+            "questionId": "q2",
+            "answer": "true"
+        }
+    ]
+}
+
+### 获取学生的所有尝试记录
+GET http://localhost:4000/api/courses/RS101/quizzes/QUIZ_ID/attempts?studentId=123
+
+### 获取学生的最新尝试记录
+GET http://localhost:4000/api/courses/RS101/quizzes/QUIZ_ID/latest-attempt?studentId=123
+
+### 获取特定尝试记录
+GET http://localhost:4000/api/courses/RS101/quizzes/QUIZ_ID/attempts/ATTEMPT_ID 
