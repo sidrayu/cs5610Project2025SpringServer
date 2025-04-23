@@ -67,9 +67,13 @@ export const createOrUpdateQuizAnswer = async (uid, quizAnswer) => {
     }
     quizAnswer.score = score;
     quizAnswer.answers = scoredQuizAnswers;
-    const startTime = new Date(quizAnswer.startTime);
-    const endTime = new Date(quizAnswer.endTime);
-    quizAnswer.timeSpent = Math.floor((endTime - startTime) / 1000);
+    
+    // Use the timeSpent from the client if provided, otherwise calculate it
+    if (quizAnswer.timeSpent === undefined) {
+        const startTime = new Date(quizAnswer.startTime);
+        const endTime = new Date(quizAnswer.endTime);
+        quizAnswer.timeSpent = Math.floor((endTime - startTime) / 1000);
+    }
 
     const lastAttempt = await model.findOne({ userId: uid, quizId: quizAnswer.quizId }).sort({ attemptCount: -1 });
     console.log("lastAttempt:", lastAttempt);
