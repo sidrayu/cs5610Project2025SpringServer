@@ -91,11 +91,11 @@ export default function UserRoutes(app) {
       res.sendStatus(401);
       return;
     }
-    if (currentUser.role === "ADMIN") {
-      const courses = await courseDao.findAllCourses();
-      res.json(courses);
-      return;
-    }
+    // if (currentUser.role === "ADMIN") {
+    //   const courses = await courseDao.findAllCourses();
+    //   res.json(courses);
+    //   return;
+    // }
     let { uid } = req.params;
     if (uid === "current") {
       uid = currentUser._id;
